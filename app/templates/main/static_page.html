@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="mx-auto max-w-4xl px-4 py-12">
+  <h1 class="text-4xl font-black">{{ title }}</h1>
+  <div class="panel mt-6 space-y-4 p-6 text-slate-700 dark:text-zinc-300">
+    {% if page == "faq" %}
+      <h2 class="font-black">How does the workflow run?</h2>
+      <p>Select a service, upload documents, submit the order, pay online, then track progress until completion.</p>
+      <h2 class="font-black">Which files are accepted?</h2>
+      <p>PDF, DOCX, JPG, PNG, and ZIP files.</p>
+    {% elif page == "privacy" %}
+      <p>Customer files are stored privately and exposed only to the customer and authorized staff roles.</p>
+    {% elif page == "terms" %}
+      <p>Services are processed after document submission and payment confirmation. Rejected or incomplete orders may require additional documents.</p>
+    {% else %}
+      <p>JOHN ONLINE SERVICES & APPLICATIONS provides secure online assistance for student, business, IT, and tourism needs.</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="mx-auto max-w-7xl px-4 py-10">
+  <h1 class="text-3xl font-black">Uploaded Files</h1>
+  <div class="panel mt-6 overflow-hidden"><table class="table"><thead><tr><th>File</th><th>Order</th><th>Purpose</th><th>Uploaded By</th><th></th></tr></thead><tbody>
+    {% for file in files %}<tr><td>{{ file.original_filename }}</td><td>{{ file.order.order_number }}</td><td>{{ file.purpose.replace("_", " ") }}</td><td>{{ file.uploaded_by.name }}</td><td><a class="font-bold text-teal-700" href="{{ url_for('orders.download_file', file_id=file.id) }}">Download</a></td></tr>{% endfor %}
+  </tbody></table></div>
+</section>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="mx-auto max-w-md px-4 py-12">
+  <h1 class="text-3xl font-black">Login</h1>
+  <form method="post" class="panel mt-6 space-y-4 p-6">
+    {{ form.hidden_tag() }}
+    <div>{{ form.email.label(class="label") }}{{ form.email(class="field") }}</div>
+    <div>{{ form.password.label(class="label") }}{{ form.password(class="field") }}</div>
+    {{ form.submit(class="btn-primary w-full") }}
+    <a class="block text-center text-sm text-teal-700" href="{{ url_for('auth.forgot_password') }}">Forgot password?</a>
+  </form>
+</section>
+{% endblock %}

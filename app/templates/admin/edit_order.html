@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="mx-auto max-w-5xl px-4 py-10">
+  <h1 class="text-3xl font-black">{{ order.order_number }}</h1>
+  <p class="mt-2 text-slate-600 dark:text-zinc-400">{{ order.customer.name }} requested {{ order.service.name }}</p>
+  <form method="post" enctype="multipart/form-data" class="panel mt-6 space-y-4 p-6">
+    {{ form.hidden_tag() }}
+    <div>{{ form.status.label(class="label") }}{{ form.status(class="field") }}</div>
+    <div>{{ form.admin_notes.label(class="label") }}{{ form.admin_notes(class="field", rows="4") }}</div>
+    <div>{{ form.result_file.label(class="label") }}{{ form.result_file(class="field") }}</div>
+    {{ form.submit(class="btn-primary") }}
+  </form>
+  <div class="panel mt-6 p-6">
+    <h2 class="font-black">Files</h2>
+    {% for file in order.files.all() %}
+      <div class="mt-2 flex justify-between rounded bg-slate-50 px-3 py-2 dark:bg-zinc-900"><span>{{ file.original_filename }}</span><a class="font-bold text-teal-700" href="{{ url_for('orders.download_file', file_id=file.id) }}">Download</a></div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

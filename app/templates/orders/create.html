@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="mx-auto max-w-3xl px-4 py-10">
+  <h1 class="text-3xl font-black">Submit Order</h1>
+  <form method="post" enctype="multipart/form-data" class="panel mt-6 space-y-5 p-6">
+    {{ form.hidden_tag() }}
+    <div>{{ form.service_id.label(class="label") }}{{ form.service_id(class="field") }}</div>
+    <div>{{ form.notes.label(class="label") }}{{ form.notes(class="field", rows="5") }}</div>
+    <div>{{ form.documents.label(class="label") }}{{ form.documents(class="field", multiple=True) }}<p class="mt-2 text-sm text-slate-500">Allowed: PDF, DOCX, JPG, PNG, ZIP.</p></div>
+    {{ form.submit(class="btn-primary") }}
+  </form>
+</section>
+{% endblock %}

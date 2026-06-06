@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="mx-auto max-w-7xl px-4 py-10">
+  <h1 class="text-3xl font-black">Admin Dashboard</h1>
+  <div class="mt-6 grid gap-4 md:grid-cols-5">
+    {% for label, value in stats.items() %}
+      <div class="panel p-5"><p class="text-sm text-slate-500">{{ label.replace("_", " ").title() }}</p><p class="mt-2 text-2xl font-black">{{ "{:,}".format(value) }}</p></div>
+    {% endfor %}
+  </div>
+  <div class="mt-6 flex flex-wrap gap-3">
+    <a class="btn-secondary" href="{{ url_for('admin.users') }}">Users</a>
+    <a class="btn-secondary" href="{{ url_for('admin.services') }}">Services</a>
+    <a class="btn-secondary" href="{{ url_for('admin.orders') }}">Orders</a>
+    <a class="btn-secondary" href="{{ url_for('admin.payments') }}">Payments</a>
+    <a class="btn-secondary" href="{{ url_for('admin.files') }}">Files</a>
+  </div>
+  <div class="panel mt-6 overflow-hidden">
+    <table class="table">
+      <thead><tr><th>Order</th><th>Customer</th><th>Service</th><th>Status</th><th></th></tr></thead>
+      <tbody>{% for order in latest_orders %}<tr><td>{{ order.order_number }}</td><td>{{ order.customer.name }}</td><td>{{ order.service.name }}</td><td><span class="badge">{{ order.status.replace("_", " ") }}</span></td><td><a class="font-bold text-teal-700" href="{{ url_for('admin.edit_order', order_number=order.order_number) }}">Manage</a></td></tr>{% endfor %}</tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

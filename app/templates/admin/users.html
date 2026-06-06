@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="mx-auto max-w-7xl px-4 py-10">
+  <h1 class="text-3xl font-black">Users</h1>
+  <div class="panel mt-6 overflow-hidden">
+    <table class="table"><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th></th></tr></thead><tbody>
+      {% for user in users %}<tr><td>{{ user.name }}</td><td>{{ user.email }}</td><td>{{ user.role }}</td><td>{{ "Active" if user.is_active else "Inactive" }}</td><td><a class="font-bold text-teal-700" href="{{ url_for('admin.edit_user', user_id=user.id) }}">Edit</a></td></tr>{% endfor %}
+    </tbody></table>
+  </div>
+</section>
+{% endblock %}

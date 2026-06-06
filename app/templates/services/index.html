@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="mx-auto max-w-7xl px-4 py-10">
+  <h1 class="text-3xl font-black">Services</h1>
+  <div class="mt-6 space-y-8">
+    {% for category in categories %}
+      <div>
+        <h2 class="mb-3 text-xl font-black">{{ category.name }}</h2>
+        <div class="grid gap-4 md:grid-cols-3">
+          {% for service in category.services.filter_by(is_active=True).all() %}
+            <a class="panel p-5 hover:border-teal-600" href="{{ url_for('services.detail', slug=service.slug) }}">
+              <h3 class="font-black">{{ service.name }}</h3>
+              <p class="mt-2 text-sm text-slate-600 dark:text-zinc-400">{{ service.description }}</p>
+              <p class="mt-3 font-bold">TZS {{ "{:,}".format(service.price) }}</p>
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

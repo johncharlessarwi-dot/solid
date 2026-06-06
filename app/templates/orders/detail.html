@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="mx-auto max-w-5xl px-4 py-10">
+  <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+    <div>
+      <p class="text-sm font-bold uppercase text-teal-700">{{ order.order_number }}</p>
+      <h1 class="text-3xl font-black">{{ order.service.name }}</h1>
+    </div>
+    <span class="badge">{{ order.status.replace("_", " ") }}</span>
+  </div>
+  <div class="mt-6 grid gap-5 md:grid-cols-[1fr_320px]">
+    <div class="panel p-5">
+      <h2 class="font-black">Documents</h2>
+      <div class="mt-4 space-y-2">
+        {% for file in order.files.all() %}
+          <div class="flex items-center justify-between rounded bg-slate-50 px-3 py-2 dark:bg-zinc-900">
+            <span>{{ file.original_filename }} <small class="text-slate-500">({{ file.purpose.replace("_", " ") }})</small></span>
+            <a class="text-sm font-bold text-teal-700" href="{{ url_for('orders.download_file', file_id=file.id) }}">Download</a>
+          </div>
+        {% else %}
+          <p class="text-sm text-slate-500">No files uploaded.</p>
+        {% endfor %}
+      </div>
+    </div>
+    <aside class="panel p-5">
+      <h2 class="font-black">Payment</h2>
+      <p class="mt-2 text-2xl font-black">TZS {{ "{:,}".format(order.amount) }}</p>
+      <form method="post" action="{{ url_for('payments.stripe_checkout', order_number=order.order_number) }}" x-data @submit.prevent="fetch($el.action,{method:'POST',headers:{'X-CSRFToken':'{{ csrf_token() }}'}}).then(r=>r.json()).then(d=>{ if(d.checkout_url) location.href=d.checkout_url })">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button class="btn-primary mt-4 w-full" type="submit">Pay with Stripe</button>
+      </form>
+    </aside>
+  </div>
+</section>
+{% endblock %}

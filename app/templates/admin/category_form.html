@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="mx-auto max-w-2xl px-4 py-10">
+  <h1 class="text-3xl font-black">Category</h1>
+  <form method="post" class="panel mt-6 space-y-4 p-6">
+    {{ form.hidden_tag() }}
+    <div>{{ form.name.label(class="label") }}{{ form.name(class="field") }}</div>
+    <div>{{ form.description.label(class="label") }}{{ form.description(class="field", rows="4") }}</div>
+    {{ form.submit(class="btn-primary") }}
+  </form>
+</section>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="mx-auto max-w-lg px-4 py-10">
+  <h1 class="text-3xl font-black">Edit {{ user.name }}</h1>
+  <form method="post" class="panel mt-6 space-y-4 p-6">
+    {{ form.hidden_tag() }}
+    <div>{{ form.role.label(class="label") }}{{ form.role(class="field") }}</div>
+    <label class="flex gap-2">{{ form.is_active() }} Active</label>
+    {{ form.submit(class="btn-primary") }}
+  </form>
+</section>
+{% endblock %}

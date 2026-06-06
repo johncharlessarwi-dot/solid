@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en" x-data="{ dark: localStorage.theme === 'dark' }" :class="{ 'dark': dark }">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ config.APP_NAME }}{% endblock %}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-zinc-950 dark:text-zinc-100">
+  <nav class="sticky top-0 z-30 border-b border-slate-200 bg-white/95 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/95">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
+      <a href="{{ url_for('main.home') }}" class="font-black tracking-wide text-slate-950 dark:text-white">JOHN ONLINE</a>
+      <div class="hidden items-center gap-5 text-sm md:flex">
+        <a href="{{ url_for('services.index') }}">Services</a>
+        <a href="{{ url_for('main.pricing') }}">Pricing</a>
+        <a href="{{ url_for('main.about') }}">About</a>
+        <a href="{{ url_for('main.faq') }}">FAQ</a>
+        <a href="{{ url_for('main.contact') }}">Contact</a>
+      </div>
+      <div class="flex items-center gap-2">
+        <button class="rounded border px-3 py-2 text-sm dark:border-zinc-700" @click="dark = !dark; localStorage.theme = dark ? 'dark' : 'light'">Mode</button>
+        {% if current_user.is_authenticated %}
+          <a class="btn-secondary" href="{{ url_for('dashboard.index') }}">Dashboard</a>
+          <a class="btn-primary" href="{{ url_for('auth.logout') }}">Logout</a>
+        {% else %}
+          <a class="btn-secondary" href="{{ url_for('auth.login') }}">Login</a>
+          <a class="btn-primary" href="{{ url_for('auth.register') }}">Register</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="mx-auto max-w-7xl px-4 pt-4">
+          {% for category, message in messages %}
+            <div class="mb-2 rounded border px-4 py-3 text-sm dark:border-zinc-800">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="mt-16 border-t border-slate-200 bg-white py-8 text-sm text-slate-600 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
+    <div class="mx-auto flex max-w-7xl flex-col gap-3 px-4 md:flex-row md:items-center md:justify-between">
+      <p>&copy; 2026 JOHN ONLINE SERVICES & APPLICATIONS</p>
+      <div class="flex gap-4">
+        <a href="{{ url_for('main.terms') }}">Terms</a>
+        <a href="{{ url_for('main.privacy') }}">Privacy Policy</a>
+        <a href="{{ url_for('main.blog') }}">Blog</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

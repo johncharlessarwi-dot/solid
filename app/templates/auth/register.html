@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="mx-auto max-w-lg px-4 py-12">
+  <h1 class="text-3xl font-black">Create Account</h1>
+  <form method="post" class="panel mt-6 space-y-4 p-6">
+    {{ form.hidden_tag() }}
+    <div>{{ form.name.label(class="label") }}{{ form.name(class="field") }}</div>
+    <div>{{ form.email.label(class="label") }}{{ form.email(class="field") }}</div>
+    <div>{{ form.phone.label(class="label") }}{{ form.phone(class="field") }}</div>
+    <div>{{ form.password.label(class="label") }}{{ form.password(class="field") }}</div>
+    <div>{{ form.confirm_password.label(class="label") }}{{ form.confirm_password(class="field") }}</div>
+    {{ form.submit(class="btn-primary w-full") }}
+  </form>
+</section>
+{% endblock %}

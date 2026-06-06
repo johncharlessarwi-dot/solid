@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="mx-auto max-w-7xl px-4 py-10">
+  <h1 class="text-3xl font-black">Pricing</h1>
+  <div class="mt-6 overflow-hidden panel">
+    <table class="table">
+      <thead><tr><th>Service</th><th>Category</th><th>Price</th><th></th></tr></thead>
+      <tbody>
+        {% for service in services %}
+          <tr><td>{{ service.name }}</td><td>{{ service.category.name }}</td><td>TZS {{ "{:,}".format(service.price) }}</td><td><a class="btn-primary" href="{{ url_for('orders.create') }}">Order</a></td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}
