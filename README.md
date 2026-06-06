@@ -11,7 +11,6 @@ A production-minded Flask digital service marketplace where customers request se
 - Tailwind CSS via CDN for fast setup
 - Alpine.js
 - Stripe checkout and webhook support
-- PeterPay-style JSON payment endpoints with API key and HMAC verification
 - Local secure file storage
 
 ## Setup
@@ -39,38 +38,10 @@ Open `http://localhost:5000`.
 - `accountant`
 - `customer`
 
-## Payment API
+## Stripe Payment Routes
 
-### Create Payment
-
-`POST /payments/create`
-
-Headers:
-
-- `X-API-KEY`
-- `Content-Type: application/json`
-
-Payload:
-
-```json
-{
-  "amount": 30000,
-  "buyer_phone": "255712345678",
-  "buyer_name": "Customer Name"
-}
-```
-
-### Status Update
-
-`POST /order_status`
-
-The request body must be signed with HMAC SHA256 using `PETERPAY_WEBHOOK_SECRET`.
-
-Header:
-
-- `X-PETERPAY-SIGNATURE`
-
-Invalid signatures are rejected with HTTP 401.
+- `POST /orders/<order_number>/stripe-checkout`
+- `POST /stripe/webhook`
 
 ## Notes For Production
 

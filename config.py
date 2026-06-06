@@ -23,7 +23,4 @@ class Config:
     STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY", "")
     STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET", "")
 
-    PETERPAY_API_KEY = os.getenv("PETERPAY_API_KEY", "")
-    PETERPAY_WEBHOOK_SECRET = os.getenv("PETERPAY_WEBHOOK_SECRET", "")
-
     ALLOWED_EXTENSIONS = {"pdf", "docx", "jpg", "jpeg", "png", "zip"}

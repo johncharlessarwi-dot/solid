@@ -26,7 +26,12 @@ class User(UserMixin, TimestampMixin, db.Model):
     password_hash = db.Column(db.String(255), nullable=False)
     is_active = db.Column(db.Boolean, default=True, nullable=False)
 
-    orders = db.relationship("Order", back_populates="customer", lazy="dynamic")
+    orders = db.relationship(
+        "Order",
+        foreign_keys="Order.customer_id",
+        back_populates="customer",
+        lazy="dynamic",
+    )
     notifications = db.relationship("Notification", back_populates="user", lazy="dynamic")
 
     def set_password(self, password):
@@ -82,7 +87,7 @@ class Payment(TimestampMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     order_id = db.Column(db.Integer, db.ForeignKey("order.id"))
     transaction_reference = db.Column(db.String(120), unique=True, nullable=False, default=lambda: uuid4().hex)
-    provider = db.Column(db.String(40), default="peterpay", nullable=False)
+    provider = db.Column(db.String(40), default="stripe", nullable=False)
     amount = db.Column(db.Integer, nullable=False)
     currency = db.Column(db.String(8), default="TZS", nullable=False)
     buyer_phone = db.Column(db.String(40))
@@ -123,6 +128,6 @@ class AuditLog(TimestampMixin, db.Model):
     action = db.Column(db.String(160), nullable=False)
     entity_type = db.Column(db.String(80))
     entity_id = db.Column(db.Integer)
-    metadata = db.Column(db.JSON)
+    meta = db.Column("metadata", db.JSON)
 
     actor = db.relationship("User")
