@@ -14,23 +14,39 @@ def stripe_checkout(order_number):
     order = Order.query.filter_by(order_number=order_number, customer_id=current_user.id).first_or_404()
     stripe.api_key = current_app.config["STRIPE_SECRET_KEY"]
     if not stripe.api_key:
-        abort(503, "Stripe is not configured.")
-    session = stripe.checkout.Session.create(
-        mode="payment",
-        line_items=[
-            {
-                "price_data": {
-                    "currency": "tzs",
-                    "unit_amount": order.amount,
-                    "product_data": {"name": order.service.name},
-                },
-                "quantity": 1,
-            }
-        ],
-        metadata={"order_id": order.id, "order_number": order.order_number},
-        success_url=current_app.config["BASE_URL"] + url_for("orders.detail", order_number=order.order_number),
-        cancel_url=current_app.config["BASE_URL"] + url_for("orders.detail", order_number=order.order_number),
-    )
+        return jsonify({"error": "Stripe is not configured."}), 503
+
+    minimum_amount = current_app.config["STRIPE_MIN_TZS"]
+    if order.amount < minimum_amount:
+        return (
+            jsonify(
+                {
+                    "error": f"This order is TZS {order.amount:,}. Stripe checkout requires at least TZS {minimum_amount:,}. Please increase the service price or contact support.",
+                }
+            ),
+            400,
+        )
+
+    try:
+        session = stripe.checkout.Session.create(
+            mode="payment",
+            line_items=[
+                {
+                    "price_data": {
+                        "currency": "tzs",
+                        "unit_amount": order.amount,
+                        "product_data": {"name": order.service.name},
+                    },
+                    "quantity": 1,
+                }
+            ],
+            metadata={"order_id": order.id, "order_number": order.order_number},
+            success_url=current_app.config["BASE_URL"] + url_for("orders.detail", order_number=order.order_number),
+            cancel_url=current_app.config["BASE_URL"] + url_for("orders.detail", order_number=order.order_number),
+        )
+    except Exception as exc:
+        return jsonify({"error": str(exc)}), 400
+
     payment = Payment(order=order, provider="stripe", amount=order.amount, transaction_reference=session.id, status="pending")
     db.session.add(payment)
     db.session.commit()

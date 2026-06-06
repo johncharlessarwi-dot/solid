@@ -25,9 +25,27 @@
     <aside class="panel p-5">
       <h2 class="font-black">Payment</h2>
       <p class="mt-2 text-2xl font-black">TZS {{ "{:,}".format(order.amount) }}</p>
-      <form method="post" action="{{ url_for('payments.stripe_checkout', order_number=order.order_number) }}" x-data @submit.prevent="fetch($el.action,{method:'POST',headers:{'X-CSRFToken':'{{ csrf_token() }}'}}).then(r=>r.json()).then(d=>{ if(d.checkout_url) location.href=d.checkout_url })">
+      <form
+        method="post"
+        action="{{ url_for('payments.stripe_checkout', order_number=order.order_number) }}"
+        x-data="{ error: '', loading: false }"
+        @submit.prevent="
+          error = '';
+          loading = true;
+          fetch($el.action,{method:'POST',headers:{'X-CSRFToken':'{{ csrf_token() }}'}})
+            .then(async r => {
+              const d = await r.json();
+              if (!r.ok) throw new Error(d.error || 'Unable to create Stripe checkout.');
+              return d;
+            })
+            .then(d => { if(d.checkout_url) location.href=d.checkout_url })
+            .catch(e => error = e.message)
+            .finally(() => loading = false)
+        "
+      >
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-        <button class="btn-primary mt-4 w-full" type="submit">Pay with Stripe</button>
+        <p class="mt-3 rounded border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700" x-show="error" x-text="error"></p>
+        <button class="btn-primary mt-4 w-full" type="submit" x-text="loading ? 'Opening Stripe...' : 'Pay with Stripe'">Pay with Stripe</button>
       </form>
     </aside>
   </div>

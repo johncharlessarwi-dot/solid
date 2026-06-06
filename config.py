@@ -22,5 +22,6 @@ class Config:
     STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY", "")
     STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY", "")
     STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET", "")
+    STRIPE_MIN_TZS = max(int(os.getenv("STRIPE_MIN_TZS", 2000)), 2000)
 
     ALLOWED_EXTENSIONS = {"pdf", "docx", "jpg", "jpeg", "png", "zip"}

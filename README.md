@@ -43,6 +43,8 @@ Open `http://localhost:5000`.
 - `POST /orders/<order_number>/stripe-checkout`
 - `POST /stripe/webhook`
 
+Stripe enforces a minimum charge amount. For TZS payments this app blocks checkout below `STRIPE_MIN_TZS`, defaulting to `1500`, and shows a friendly message instead of raising a server error.
+
 ## Notes For Production
 
 - Use a strong `SECRET_KEY`.
