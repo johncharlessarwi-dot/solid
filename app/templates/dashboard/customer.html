@@ -16,7 +16,7 @@
       <thead><tr><th>Order</th><th>Service</th><th>Status</th><th>Amount</th><th></th></tr></thead>
       <tbody>
         {% for order in orders %}
-          <tr><td>{{ order.order_number }}</td><td>{{ order.service.name }}</td><td><span class="badge">{{ order.status.replace("_", " ") }}</span></td><td>TZS {{ "{:,}".format(order.amount) }}</td><td><a class="font-bold text-teal-700" href="{{ url_for('orders.detail', order_number=order.order_number) }}">View</a></td></tr>
+          <tr><td>{{ order.order_number }}</td><td>{{ order.service.name }}</td><td><span class="badge">{{ order.status.replace("_", " ") }}</span></td><td>${{ "%.2f"|format(order.amount / 100) }} USD</td><td><a class="font-bold text-teal-700" href="{{ url_for('orders.detail', order_number=order.order_number) }}">View</a></td></tr>
         {% endfor %}
       </tbody>
     </table>

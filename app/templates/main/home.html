@@ -40,7 +40,7 @@
       <a class="panel p-5 hover:border-teal-600" href="{{ url_for('services.detail', slug=service.slug) }}">
         <p class="text-xs font-bold uppercase text-teal-700">{{ service.category.name }}</p>
         <h3 class="mt-2 font-black">{{ service.name }}</h3>
-        <p class="mt-3 font-bold">TZS {{ "{:,}".format(service.price) }}</p>
+        <p class="mt-3 font-bold">${{ "%.2f"|format(service.price / 100) }} USD</p>
       </a>
     {% endfor %}
   </div>

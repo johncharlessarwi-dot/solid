@@ -24,7 +24,7 @@
     </div>
     <aside class="panel p-5">
       <h2 class="font-black">Payment</h2>
-      <p class="mt-2 text-2xl font-black">TZS {{ "{:,}".format(order.amount) }}</p>
+      <p class="mt-2 text-2xl font-black">${{ "%.2f"|format(order.amount / 100) }} USD</p>
       <form
         method="post"
         action="{{ url_for('payments.stripe_checkout', order_number=order.order_number) }}"

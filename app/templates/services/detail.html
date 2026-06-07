@@ -4,7 +4,7 @@
   <p class="text-sm font-bold uppercase text-teal-700">{{ service.category.name }}</p>
   <h1 class="mt-2 text-4xl font-black">{{ service.name }}</h1>
   <p class="mt-4 text-slate-600 dark:text-zinc-300">{{ service.description }}</p>
-  <p class="mt-6 text-2xl font-black">TZS {{ "{:,}".format(service.price) }}</p>
+  <p class="mt-6 text-2xl font-black">${{ "%.2f"|format(service.price / 100) }} USD</p>
   <a class="btn-primary mt-6" href="{{ url_for('orders.create') }}">Request this service</a>
 </section>
 {% endblock %}

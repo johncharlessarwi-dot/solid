@@ -16,12 +16,12 @@ def stripe_checkout(order_number):
     if not stripe.api_key:
         return jsonify({"error": "Stripe is not configured."}), 503
 
-    minimum_amount = current_app.config["STRIPE_MIN_TZS"]
+    minimum_amount = current_app.config["STRIPE_MIN_USD"]
     if order.amount < minimum_amount:
         return (
             jsonify(
                 {
-                    "error": f"This order is TZS {order.amount:,}. Stripe checkout requires at least TZS {minimum_amount:,}. Please increase the service price or contact support.",
+                    "error": f"This order is ${order.amount / 100:.2f} USD. Stripe checkout requires at least ${minimum_amount / 100:.2f} USD. Please increase the service price or contact support.",
                 }
             ),
             400,
@@ -33,7 +33,7 @@ def stripe_checkout(order_number):
             line_items=[
                 {
                     "price_data": {
-                        "currency": "tzs",
+                        "currency": "usd",
                         "unit_amount": order.amount,
                         "product_data": {"name": order.service.name},
                     },
@@ -47,7 +47,7 @@ def stripe_checkout(order_number):
     except Exception as exc:
         return jsonify({"error": str(exc)}), 400
 
-    payment = Payment(order=order, provider="stripe", amount=order.amount, transaction_reference=session.id, status="pending")
+    payment = Payment(order=order, provider="stripe", amount=order.amount, currency="usd", transaction_reference=session.id, status="pending")
     db.session.add(payment)
     db.session.commit()
     return jsonify({"checkout_url": session.url})

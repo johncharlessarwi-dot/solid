@@ -14,7 +14,7 @@ orders_bp = Blueprint("orders", __name__, url_prefix="/orders")
 def create():
     form = OrderForm()
     services = Service.query.filter_by(is_active=True).order_by(Service.name).all()
-    form.service_id.choices = [(service.id, f"{service.name} - TZS {service.price:,}") for service in services]
+    form.service_id.choices = [(service.id, f"{service.name} - ${service.price / 100:.2f} USD") for service in services]
     if form.validate_on_submit():
         service = Service.query.get_or_404(form.service_id.data)
         order = Order(customer=current_user, service=service, amount=service.price, notes=form.notes.data)

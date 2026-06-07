@@ -4,7 +4,7 @@
   <h1 class="text-3xl font-black">Orders</h1>
   <div class="panel mt-6 overflow-hidden">
     <table class="table"><thead><tr><th>Order</th><th>Customer</th><th>Service</th><th>Status</th><th>Amount</th><th></th></tr></thead><tbody>
-      {% for order in orders %}<tr><td>{{ order.order_number }}</td><td>{{ order.customer.name }}</td><td>{{ order.service.name }}</td><td><span class="badge">{{ order.status.replace("_", " ") }}</span></td><td>TZS {{ "{:,}".format(order.amount) }}</td><td><a class="font-bold text-teal-700" href="{{ url_for('admin.edit_order', order_number=order.order_number) }}">Manage</a></td></tr>{% endfor %}
+      {% for order in orders %}<tr><td>{{ order.order_number }}</td><td>{{ order.customer.name }}</td><td>{{ order.service.name }}</td><td><span class="badge">{{ order.status.replace("_", " ") }}</span></td><td>${{ "%.2f"|format(order.amount / 100) }} USD</td><td><a class="font-bold text-teal-700" href="{{ url_for('admin.edit_order', order_number=order.order_number) }}">Manage</a></td></tr>{% endfor %}
     </tbody></table>
   </div>
 </section>

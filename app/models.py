@@ -89,7 +89,7 @@ class Payment(TimestampMixin, db.Model):
     transaction_reference = db.Column(db.String(120), unique=True, nullable=False, default=lambda: uuid4().hex)
     provider = db.Column(db.String(40), default="stripe", nullable=False)
     amount = db.Column(db.Integer, nullable=False)
-    currency = db.Column(db.String(8), default="TZS", nullable=False)
+    currency = db.Column(db.String(8), default="usd", nullable=False)
     buyer_phone = db.Column(db.String(40))
     buyer_name = db.Column(db.String(120))
     status = db.Column(db.String(40), default="pending", nullable=False, index=True)

@@ -7,7 +7,7 @@
       <thead><tr><th>Service</th><th>Category</th><th>Price</th><th></th></tr></thead>
       <tbody>
         {% for service in services %}
-          <tr><td>{{ service.name }}</td><td>{{ service.category.name }}</td><td>TZS {{ "{:,}".format(service.price) }}</td><td><a class="btn-primary" href="{{ url_for('orders.create') }}">Order</a></td></tr>
+          <tr><td>{{ service.name }}</td><td>{{ service.category.name }}</td><td>${{ "%.2f"|format(service.price / 100) }} USD</td><td><a class="btn-primary" href="{{ url_for('orders.create') }}">Order</a></td></tr>
         {% endfor %}
       </tbody>
     </table>
