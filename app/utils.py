@@ -21,6 +21,19 @@ def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in current_app.config["ALLOWED_EXTENSIONS"]
 
 
+def resolve_upload_directory(root, subfolder):
+    """Prevent traversal outside the configured upload root."""
+    if not isinstance(subfolder, str) or not subfolder.strip():
+        raise ValueError("Upload subfolder is required")
+    if "\\x00" in subfolder:
+        raise ValueError("Invalid upload subfolder")
+    base = Path(root).resolve()
+    candidate = (base / subfolder).resolve()
+    if not candidate.is_relative_to(base) or candidate == base:
+        raise ValueError("Upload directory must stay inside configured root")
+    return candidate
+
+
 def save_upload(file_storage, subfolder):
     if not file_storage or not file_storage.filename:
         return None
@@ -30,7 +43,7 @@ def save_upload(file_storage, subfolder):
     original = secure_filename(file_storage.filename)
     extension = original.rsplit(".", 1)[1].lower()
     stored = f"{uuid4().hex}.{extension}"
-    target_dir = Path(current_app.config["UPLOAD_FOLDER"]) / subfolder
+    target_dir = resolve_upload_directory(current_app.config["UPLOAD_FOLDER"], subfolder)
     target_dir.mkdir(parents=True, exist_ok=True)
     path = target_dir / stored
     file_storage.save(path)
