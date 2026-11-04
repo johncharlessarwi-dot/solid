@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="assets/readme/project-motion.svg" width="100%" alt="JOHN DIGITAL SERVICES animated overview banner" />
+</div>
+
 # 🌐 JOHN ONLINE SERVICES & APPLICATIONS
 
 <div align="center">
