@@ -1,4 +1,5 @@
 from flask import Blueprint, flash, redirect, render_template, request, url_for
+from urllib.parse import urlsplit
 from flask_login import current_user, login_required, login_user, logout_user
 
 from app.extensions import db
@@ -37,7 +38,10 @@ def login():
         user = User.query.filter_by(email=form.email.data.lower()).first()
         if user and user.check_password(form.password.data) and user.is_active:
             login_user(user)
-            return redirect(request.args.get("next") or url_for("dashboard.index"))
+            next_url = request.args.get("next", "")
+            parsed = urlsplit(next_url)
+            destination = next_url if next_url.startswith("/") and not next_url.startswith("//") and not parsed.netloc and not parsed.scheme else url_for("dashboard.index")
+            return redirect(destination)
         flash("Invalid email or password.", "danger")
     return render_template("auth/login.html", form=form)
 
