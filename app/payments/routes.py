@@ -59,6 +59,8 @@ def stripe_webhook():
     payload = request.get_data()
     sig_header = request.headers.get("Stripe-Signature")
     secret = current_app.config["STRIPE_WEBHOOK_SECRET"]
+    if not secret or not sig_header:
+        abort(400)
     try:
         event = stripe.Webhook.construct_event(payload, sig_header, secret)
     except Exception:
