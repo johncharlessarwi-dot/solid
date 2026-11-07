@@ -13,6 +13,8 @@ def calculate_quote_total(items, discount=0):
             raise ValueError("Invalid quote item")
         if "unit_price" not in item or "quantity" not in item:
             raise ValueError("Quote item is incomplete")
+        if set(item) != {"unit_price", "quantity"}:
+            raise ValueError("Unexpected quote item fields")
         amount = item.get("unit_price")
         quantity = item.get("quantity")
         if type(amount) is not int or type(quantity) is not int:
