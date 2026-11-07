@@ -45,3 +45,11 @@ class HmacRegression_47(unittest.TestCase):
 class HmacRegression_48(unittest.TestCase):
     def test_case(self):
         self.assertFalse(verify_hmac_signature(b'text', 'g' * 64, 'secret'))
+
+
+class HmacRegression_49(unittest.TestCase):
+    def test_case(self):
+        import hmac
+        import hashlib
+        sig = hmac.new(b'secret', b'original', hashlib.sha256).hexdigest()
+        self.assertFalse(verify_hmac_signature(b'changed', sig, 'secret'))
