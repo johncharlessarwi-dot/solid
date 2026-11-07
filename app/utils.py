@@ -25,7 +25,7 @@ def resolve_upload_directory(root, subfolder):
     """Prevent traversal outside the configured upload root."""
     if not isinstance(subfolder, str) or not subfolder.strip():
         raise ValueError("Upload subfolder is required")
-    if "\\x00" in subfolder:
+    if "\x00" in subfolder:
         raise ValueError("Invalid upload subfolder")
     base = Path(root).resolve()
     candidate = (base / subfolder).resolve()
