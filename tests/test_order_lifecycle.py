@@ -20,3 +20,8 @@ class OrderLifecycleTests(unittest.TestCase):
 class LifecycleRegression_36(unittest.TestCase):
     def test_case(self):
         with self.assertRaises(ValueError): validate_order_transition('unknown', 'completed')
+
+
+class LifecycleRegression_37(unittest.TestCase):
+    def test_case(self):
+        with self.assertRaises(ValueError): validate_order_transition('pending', 'unknown')
