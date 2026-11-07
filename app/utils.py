@@ -27,6 +27,8 @@ def resolve_upload_directory(root, subfolder):
         raise ValueError("Upload subfolder is required")
     if "\x00" in subfolder:
         raise ValueError("Invalid upload subfolder")
+    if any(part in ("", ".", "..") for part in subfolder.replace("\\", "/").split("/")):
+        raise ValueError("Invalid upload directory segments")
     base = Path(root).resolve()
     candidate = (base / subfolder).resolve()
     if not candidate.is_relative_to(base) or candidate == base:
