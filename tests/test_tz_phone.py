@@ -18,3 +18,8 @@ class TanzaniaMobileTests(unittest.TestCase):
 class PhoneRegression_28(unittest.TestCase):
     def test_case(self):
         with self.assertRaises(ValueError): normalize_tz_mobile('069817A989')
+
+
+class PhoneRegression_29(unittest.TestCase):
+    def test_case(self):
+        with self.assertRaises(ValueError): normalize_tz_mobile('0598170989')
