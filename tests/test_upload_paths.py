@@ -52,3 +52,9 @@ class UploadPathRegression_14 (unittest.TestCase):
     def test_path(self):
         with tempfile.TemporaryDirectory() as root:
             with self.assertRaises(ValueError): resolve_upload_directory(root, r'orders\..\escape')
+
+
+class UploadPathRegression_15 (unittest.TestCase):
+    def test_path(self):
+        with tempfile.TemporaryDirectory() as root:
+            with self.assertRaises(ValueError): resolve_upload_directory(root, 'orders/../other')
