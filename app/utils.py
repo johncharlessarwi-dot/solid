@@ -40,6 +40,8 @@ def save_upload(file_storage, subfolder):
     if not allowed_file(file_storage.filename):
         raise ValueError("Unsupported file type.")
 
+    if "\x00" in file_storage.filename:
+        raise ValueError("Invalid filename")
     original = secure_filename(file_storage.filename)
     extension = original.rsplit(".", 1)[1].lower()
     stored = f"{uuid4().hex}.{extension}"
