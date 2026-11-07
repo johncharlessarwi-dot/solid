@@ -15,3 +15,8 @@ class OrderLifecycleTests(unittest.TestCase):
     def test_cannot_skip_review(self):
         with self.assertRaises(ValueError):
             validate_order_transition("pending", "completed")
+
+
+class LifecycleRegression_36(unittest.TestCase):
+    def test_case(self):
+        with self.assertRaises(ValueError): validate_order_transition('unknown', 'completed')
