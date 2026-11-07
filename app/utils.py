@@ -59,6 +59,8 @@ def verify_hmac_signature(raw_body, signature, secret):
         return False
     if not signature or not secret:
         return False
+    if len(signature) != 64 or any(char not in "0123456789abcdefABCDEF" for char in signature):
+        return False
     digest = hmac.new(secret.encode("utf-8"), raw_body, sha256).hexdigest()
     return hmac.compare_digest(digest, signature)
 
