@@ -30,3 +30,8 @@ class LifecycleRegression_37(unittest.TestCase):
 class LifecycleRegression_38(unittest.TestCase):
     def test_case(self):
         with self.assertRaises(ValueError): validate_order_transition('pending', 'in_progress')
+
+
+class LifecycleRegression_39(unittest.TestCase):
+    def test_case(self):
+        with self.assertRaises(ValueError): validate_order_transition('pending', 'pending')
