@@ -43,6 +43,8 @@ def save_upload(file_storage, subfolder):
     if "\x00" in file_storage.filename:
         raise ValueError("Invalid filename")
     original = secure_filename(file_storage.filename)
+    if not original or "." not in original:
+        raise ValueError("Invalid filename")
     extension = original.rsplit(".", 1)[1].lower()
     stored = f"{uuid4().hex}.{extension}"
     target_dir = resolve_upload_directory(current_app.config["UPLOAD_FOLDER"], subfolder)
