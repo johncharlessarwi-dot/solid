@@ -28,3 +28,8 @@ class PhoneRegression_29(unittest.TestCase):
 class PhoneRegression_30(unittest.TestCase):
     def test_case(self):
         with self.assertRaises(ValueError): normalize_tz_mobile('06981709891')
+
+
+class PhoneRegression_31(unittest.TestCase):
+    def test_case(self):
+        with self.assertRaises(ValueError): normalize_tz_mobile('   ')
