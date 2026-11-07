@@ -55,6 +55,8 @@ def save_upload(file_storage, subfolder):
 
 
 def verify_hmac_signature(raw_body, signature, secret):
+    if not isinstance(raw_body, bytes) or not isinstance(signature, str) or not isinstance(secret, str):
+        return False
     if not signature or not secret:
         return False
     digest = hmac.new(secret.encode("utf-8"), raw_body, sha256).hexdigest()
