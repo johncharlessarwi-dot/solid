@@ -20,3 +20,8 @@ class ExistingSecurityTests(unittest.TestCase):
 class HmacRegression_43(unittest.TestCase):
     def test_case(self):
         self.assertFalse(verify_hmac_signature('text', '0' * 64, 'secret'))
+
+
+class HmacRegression_44(unittest.TestCase):
+    def test_case(self):
+        self.assertFalse(verify_hmac_signature(b'text', 1234, 'secret'))
