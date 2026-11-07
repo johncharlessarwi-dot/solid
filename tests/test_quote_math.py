@@ -17,3 +17,8 @@ class QuoteMathTests(unittest.TestCase):
         ]:
             with self.subTest(items=items), self.assertRaises(ValueError):
                 calculate_quote_total(items, discount)
+
+
+class QuoteRegression_18(unittest.TestCase):
+    def test_case(self):
+        with self.assertRaises(ValueError): calculate_quote_total([{'unit_price': 10}])
