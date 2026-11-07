@@ -30,3 +30,8 @@ class HmacRegression_44(unittest.TestCase):
 class HmacRegression_45(unittest.TestCase):
     def test_case(self):
         self.assertFalse(verify_hmac_signature(b'text', '0' * 64, 1234))
+
+
+class HmacRegression_46(unittest.TestCase):
+    def test_case(self):
+        self.assertFalse(verify_hmac_signature(b'text', 'a' * 63, 'secret'))
