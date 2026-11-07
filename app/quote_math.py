@@ -11,6 +11,8 @@ def calculate_quote_total(items, discount=0):
     for item in items:
         if not isinstance(item, dict):
             raise ValueError("Invalid quote item")
+        if "unit_price" not in item or "quantity" not in item:
+            raise ValueError("Quote item is incomplete")
         amount = item.get("unit_price")
         quantity = item.get("quantity")
         if type(amount) is not int or type(quantity) is not int:
