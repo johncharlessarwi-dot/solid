@@ -12,14 +12,6 @@
 
 <div align="center">
 
-<img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=800&size=28&pause=1000&color=00F7FF&center=true&vCenter=true&width=900&lines=JOHN+ONLINE+SERVICES+%26+APPLICATIONS;YOUR+DIGITAL+WORLD%2C+SIMPLIFIED;INNOVATION+%E2%80%A2+AUTOMATION+%E2%80%A2+EXCELLENCE;BUILT+FOR+THE+FUTURE+%F0%9F%9A%80" alt="Animated typing introduction" />
-
-<br/>
-
-<img src="https://capsule-render.vercel.app/api?type=waving&height=220&color=0:020024,40:003B73,75:00C6FF,100:7B2FF7&text=DIGITAL%20EXCELLENCE&fontSize=38&fontColor=FFFFFF&fontAlignY=38&desc=Smart%20Services.%20Secure%20Systems.%20Better%20Experiences.&descAlignY=58&animation=fadeIn" width="100%" alt="Animated digital excellence banner"/>
-
-<br/>
-
 ![Python](https://img.shields.io/badge/Python-3.12+-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Flask](https://img.shields.io/badge/Flask-Powered-black?style=for-the-badge&logo=flask&logoColor=white)
 ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-Database-red?style=for-the-badge&logo=databricks&logoColor=white)
