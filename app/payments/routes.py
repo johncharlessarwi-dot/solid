@@ -44,8 +44,9 @@ def stripe_checkout(order_number):
             success_url=current_app.config["BASE_URL"] + url_for("orders.detail", order_number=order.order_number),
             cancel_url=current_app.config["BASE_URL"] + url_for("orders.detail", order_number=order.order_number),
         )
-    except Exception as exc:
-        return jsonify({"error": str(exc)}), 400
+    except stripe.StripeError:
+        current_app.logger.warning("Stripe checkout session creation failed")
+        return jsonify({"error": "Checkout is temporarily unavailable. Please try again later."}), 502
 
     payment = Payment(order=order, provider="stripe", amount=order.amount, currency="usd", transaction_reference=session.id, status="pending")
     db.session.add(payment)
