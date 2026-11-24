@@ -6,4 +6,4 @@ Flask-WTF==1.2.1
 WTForms==3.3.2
 email-validator==2.2.0
 python-dotenv==1.0.1
-stripe==10.8.0
+stripe==17.0.0
